@@ -4,11 +4,10 @@ pub struct GameOfLife {
     pub width: i32,
     pub height: i32,
     cells: Vec<bool>,
-
     wrap: bool,
 }
 
-impl GameOfLife{
+impl GameOfLife {
     pub fn new(width: i32, height: i32, wrap: bool) -> Self {
         GameOfLife {
             width,
@@ -18,10 +17,10 @@ impl GameOfLife{
         }
     }
 
-    fn wrapped(&self, x: i32, y:i32) -> (i32, i32) {
+    fn wrapped(&self, x: i32, y: i32) -> (i32, i32) {
         (
             ((x % self.width) + self.width) % self.width,
-            ((y % self.height) + self.height) % self.height
+            ((y % self.height) + self.height) % self.height,
         )
     }
 
@@ -37,7 +36,7 @@ impl GameOfLife{
             self.cells[(wy * self.width + wx) as usize]
         } else {
             if x < 0 || y < 0 || x >= self.width || y >= self.height {
-                false;
+                false
             } else {
                 self.cells[(y * self.width + x) as usize]
             }
@@ -56,7 +55,7 @@ impl GameOfLife{
                 }
             }
         }
-        n
+        count
     }
 
     pub fn step(&mut self) {
@@ -71,12 +70,12 @@ impl GameOfLife{
         }
         self.cells = next;
     }
+}
 
-    pub fn render(life: &GameOfLife, fb: &mut FrameBuffer){
-        for y in 0..life.height{
-            for x in 0..life.width{
-                fb.point(x, y, get_color(life.is_alive(x, y)))
-            }
+pub fn render(life: &GameOfLife, fb: &mut FrameBuffer) {
+    for y in 0..life.height {
+        for x in 0..life.width {
+            fb.point(x, y, get_color(life.is_alive(x, y)));
         }
     }
 }
