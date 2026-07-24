@@ -20,9 +20,11 @@ En esta implementación la grilla es **toroidal** (los bordes se conectan entre 
 
 ---
 
-## 🖼️ Captura
+## 🎬 Demo
 
-![Conway's Game of Life en ejecución](screenshot.png)
+![Conway's Game of Life en ejecución](Lab2/game_of_life.gif)
+
+> El GIF muestra las primeras 150 generaciones de la escena inicial: el cañón de Gosper disparando planeadores, las naves ligeras cruzando la grilla y el R-pentomino expandiéndose.
 
 ---
 
@@ -33,6 +35,7 @@ En esta implementación la grilla es **toroidal** (los bordes se conectan entre 
 - Un paso de simulación cada **6 frames** (a 60 FPS) para una animación fluida.
 - Contador de FPS en pantalla.
 - Escena inicial poblada con una gran variedad de patrones clásicos.
+- Exportación de la simulación a **GIF animado** con la bandera `--gif`, sin necesidad de abrir la ventana.
 
 ### Patrones incluidos
 
@@ -51,12 +54,20 @@ En esta implementación la grilla es **toroidal** (los bordes se conectan entre 
 ```
 Lab2/
 ├── Cargo.toml           # Configuración del paquete y dependencias
+├── game_of_life.gif     # GIF generado con `cargo run --release -- --gif`
 └── src/
-    ├── main.rs          # Ventana, bucle principal y siembra de patrones
+    ├── main.rs          # Ventana, bucle principal, siembra de patrones y exportación a GIF
     ├── life.rs          # Lógica del autómata (reglas y vecindad)
     ├── patterns.rs      # Definición de los patrones clásicos
     └── framebuffer.rs   # Framebuffer y colores de las celdas
 ```
+
+### Dependencias
+
+| Crate | Uso |
+|-------|-----|
+| [`raylib`](https://crates.io/crates/raylib) `5.1.1` | Ventana, bucle de render y dibujo de las celdas |
+| [`image`](https://crates.io/crates/image) `0.25` | Codificación del GIF animado (solo la feature `gif`) |
 
 ---
 
@@ -88,6 +99,20 @@ cargo run --release
 
 La primera compilación descarga y construye raylib, por lo que puede tardar unos minutos.
 
+Controles: la simulación corre sola; se cierra con `ESC` o el botón de la ventana.
+
+---
+
+## 🎥 Generar el GIF
+
+Para exportar la animación a un GIF (no abre ventana, así que también funciona sin entorno gráfico):
+
+```bash
+cargo run --release -- --gif
+```
+
+Esto escribe `game_of_life.gif` en la carpeta `Lab2/`, con **150 generaciones** a **90 ms por frame** y una escala de **4 px** por celda. Reutiliza la misma escena inicial y los mismos colores que el render en pantalla.
+
 ---
 
 ## ⚙️ Configuración
@@ -99,5 +124,9 @@ Los parámetros principales se pueden ajustar en `src/main.rs`:
 | `GRID_WIDTH` / `GRID_HEIGHT` | `100` | Dimensiones de la grilla en celdas |
 | `SCALE` | `8` | Tamaño en píxeles de cada celda |
 | `FRAMES_PER_STEP` | `6` | Frames entre cada paso de la simulación (menor = más rápido) |
+| `GIF_SCALE` | `4` | Tamaño en píxeles de cada celda dentro del GIF |
+| `GIF_FRAMES` | `150` | Cantidad de generaciones que se graban en el GIF |
 
 Para modificar la escena inicial, edita la función `seed_pattern` en `src/main.rs` cambiando los patrones y sus posiciones `(x, y)`.
+
+Los colores de las celdas (blanco para vivas, azul muy oscuro para muertas) están en la función `get_color` de `src/framebuffer.rs`.
