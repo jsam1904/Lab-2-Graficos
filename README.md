@@ -22,7 +22,7 @@ En esta implementación la grilla es **toroidal** (los bordes se conectan entre 
 
 ## 🎬 Demo
 
-![Conway's Game of Life en ejecución](Lab2/game_of_life.gif)
+![Conway's Game of Life en ejecución](game_of_life.gif)
 
 > El GIF muestra las primeras 150 generaciones de la escena inicial: el cañón de Gosper disparando planeadores, las naves ligeras cruzando la grilla y el R-pentomino expandiéndose.
 
@@ -52,7 +52,7 @@ En esta implementación la grilla es **toroidal** (los bordes se conectan entre 
 ## 📂 Estructura del proyecto
 
 ```
-Lab2/
+Lab-2-Graficos/
 ├── Cargo.toml           # Configuración del paquete y dependencias
 ├── game_of_life.gif     # GIF generado con `cargo run --release -- --gif`
 └── src/
@@ -87,7 +87,7 @@ sudo apt install build-essential cmake libx11-dev libxrandr-dev \
 
 ## 🚀 Ejecución
 
-Desde la carpeta `Lab2/`:
+Desde la raíz del proyecto:
 
 ```bash
 # Modo desarrollo
@@ -111,7 +111,7 @@ Para exportar la animación a un GIF (no abre ventana, así que también funcion
 cargo run --release -- --gif
 ```
 
-Esto escribe `game_of_life.gif` en la carpeta `Lab2/`, con **150 generaciones** a **90 ms por frame** y una escala de **4 px** por celda. Reutiliza la misma escena inicial y los mismos colores que el render en pantalla.
+Esto escribe `game_of_life.gif` en la raíz del proyecto, con **150 generaciones** a **90 ms por frame** y una escala de **4 px** por celda. Reutiliza la misma escena inicial y los mismos colores que el render en pantalla.
 
 ---
 
@@ -124,8 +124,8 @@ Los parámetros principales se pueden ajustar en `src/main.rs`:
 | `GRID_WIDTH` / `GRID_HEIGHT` | `100` | Dimensiones de la grilla en celdas |
 | `SCALE` | `8` | Tamaño en píxeles de cada celda |
 | `FRAMES_PER_STEP` | `6` | Frames entre cada paso de la simulación (menor = más rápido) |
-| `GIF_SCALE` | `4` | Tamaño en píxeles de cada celda dentro del GIF |
-| `GIF_FRAMES` | `150` | Cantidad de generaciones que se graban en el GIF |
+| `GIF_SCALE` | `4` | Tamaño en píxeles de cada celda dentro del GIF (dentro de `record_gif`) |
+| `GIF_FRAMES` | `150` | Cantidad de generaciones que se graban en el GIF (dentro de `record_gif`) |
 
 Para modificar la escena inicial, edita la función `seed_pattern` en `src/main.rs` cambiando los patrones y sus posiciones `(x, y)`.
 
